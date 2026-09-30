@@ -1,0 +1,28 @@
+endpoints:
+  - name: AWS
+    group: Cloud
+    url: "https://aws.amazon.com/"
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+  
+  - name: Terraform
+    group: IaC
+    url: "https://www.terraform.io/"
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: Google
+    group: Search Engine
+    url: "https://www.google.com/"
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: Docker
+    group: Containerization
+    url: "https://www.docker.com/"
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"

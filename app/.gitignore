@@ -1,0 +1,23 @@
+# Editor
+.vscode
+
+# OS
+.DS_Store
+
+# Go
+vendor/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+crash.*.log
+*_override.tf
+override.tf
+
+# Env
+.env    
+
+# Secrets
+secrets.json    
