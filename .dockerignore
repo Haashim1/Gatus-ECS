@@ -1,0 +1,11 @@
+.git
+.gitignore
+.DS_Store
+Dockerfile
+.dockerignore
+*.md
+*.log
+.env
+node_modules
+.terraform
+*.tfstate*
