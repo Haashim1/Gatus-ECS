@@ -11,7 +11,8 @@ RUN go build -o server .
 FROM alpine
 
 COPY --from=builder /app/server /server
-COPY app/config/config.yaml /config/config.yaml
+COPY app/config.yaml /config/config.yaml
+
 
 EXPOSE 8080
 CMD ["/server"]
