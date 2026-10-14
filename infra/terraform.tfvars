@@ -1,0 +1,7 @@
+region       = "eu-west-2"
+project_name = "gatus"
+environment  = "dev" 
+domain_name  = "haashimdevops.co.uk"
+subdomain_name = "tm"
+ecr_repository_name = "gatus"   
+image_tag = "ade8363"
