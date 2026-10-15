@@ -22,3 +22,14 @@ module "acm" {
   domain_name = local.fqdn
   zone_id     = data.aws_route53_zone.selected.zone_id
 }
+
+module "alb" {
+  source            = "./modules/alb"
+  name_prefix       = local.name_prefix
+  vpc_id            = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+  container_port    = var.container_port
+  alb_sg_id         = module.security_groups.alb_sg_id
+  certificate_arn   = module.acm.certificate_arn
+  health_check_path = var.health_check_path
+}

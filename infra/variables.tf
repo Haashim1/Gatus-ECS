@@ -74,3 +74,7 @@ variable "db_port" {
   description = "Port for the database"
 }
 
+variable "health_check_path" {
+  type        = string
+  description = "Path for the ALB health check"
+}

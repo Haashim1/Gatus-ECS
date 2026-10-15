@@ -10,3 +10,6 @@ azs                   = ["eu-west-2a", "eu-west-2b"]
 public_subnet_cidrs   = ["10.0.1.0/24", "10.0.2.0/24"]
 private_subnet_cidrs  = ["10.0.3.0/24", "10.0.4.0/24"]
 database_subnet_cidrs = ["10.0.5.0/24", "10.0.6.0/24"]
+container_port        = 8080
+db_port               = 5432
+health_check_path     = "/health"
