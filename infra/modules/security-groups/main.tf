@@ -53,3 +53,22 @@ resource "aws_vpc_security_group_egress_rule" "ecs_egress" {
   security_group_id = aws_security_group.ecs.id
   cidr_ipv4         = "0.0.0.0/0"
 }
+
+resource "aws_security_group" "rds" {
+  name        = "${var.name_prefix}-rds-sg"
+  description = "Security group for the RDS instance that allows traffic from the ECS tasks"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "${var.name_prefix}-rds-sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "rds_from_ecs" {
+  from_port                    = var.db_port
+  to_port                      = var.db_port
+  ip_protocol                  = "tcp"
+  security_group_id            = aws_security_group.rds.id
+  referenced_security_group_id = aws_security_group.ecs.id
+}
+
