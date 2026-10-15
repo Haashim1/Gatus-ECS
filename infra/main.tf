@@ -9,3 +9,10 @@ module "vpc" {
   region                = var.region
 }
 
+module "security_groups" {
+  source         = "./modules/security-groups"
+  name_prefix    = local.name_prefix
+  vpc_id         = module.vpc.vpc_id
+  container_port = var.container_port
+  db_port        = var.db_port
+}
