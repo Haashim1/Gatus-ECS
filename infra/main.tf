@@ -16,3 +16,9 @@ module "security_groups" {
   container_port = var.container_port
   db_port        = var.db_port
 }
+
+module "acm" {
+  source      = "./modules/acm"
+  domain_name = local.fqdn
+  zone_id     = data.aws_route53_zone.selected.zone_id
+}
