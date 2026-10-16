@@ -118,3 +118,27 @@ resource "aws_ecs_task_definition" "this" {
   ])
 }
 
+
+resource "aws_ecs_service" "this" {
+  name                              = "${var.name_prefix}-ecs-service"
+  cluster                           = aws_ecs_cluster.ecs_cluster.id
+  task_definition                   = aws_ecs_task_definition.this.arn
+  desired_count                     = var.desired_count
+  launch_type                       = "FARGATE"
+  health_check_grace_period_seconds = 60
+  network_configuration {
+    subnets          = var.private_subnet_ids
+    security_groups  = [var.ecs_sg_id]
+    assign_public_ip = false
+  }
+
+  load_balancer {
+    target_group_arn = var.target_group_arn
+    container_name   = "${var.name_prefix}-container"
+    container_port   = var.container_port
+  }
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
+}
