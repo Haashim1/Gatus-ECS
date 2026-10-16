@@ -47,3 +47,23 @@ module "rds" {
   multi_az            = var.multi_az
 }
 
+module "ecs" {
+  source                = "./modules/ecs"
+  name_prefix           = local.name_prefix
+  container_image       = "${data.aws_ecr_repository.service.repository_url}:${var.image_tag}"
+  container_port        = var.container_port
+  desired_count         = var.desired_count
+  private_subnet_ids    = module.vpc.private_subnet_ids
+  ecs_sg_id             = module.security_groups.ecs_sg_id
+  target_group_arn      = module.alb.target_group_arn
+  db_host               = module.rds.db_address
+  db_name               = module.rds.db_name
+  db_username           = var.db_username
+  db_secret_arn         = module.rds.db_secret_arn
+  region                = var.region
+  cpu                   = var.cpu
+  memory                = var.memory
+  log_retention_in_days = var.log_retention_in_days
+  depends_on            = [module.alb]
+
+}

@@ -108,3 +108,23 @@ variable "allocated_storage" {
   type        = number
   description = "The allocated storage in gigabytes for the RDS instance"
 }
+
+variable "cpu" {
+  type        = number
+  description = "The number of CPU units for the ECS task"
+}
+
+variable "memory" {
+  type        = number
+  description = "The amount of memory (in MiB) for the ECS task"
+}
+
+variable "log_retention_in_days" {
+  type        = number
+  description = "The number of days to retain logs in CloudWatch"
+}
+
+variable "desired_count" {
+  type        = number
+  description = "The desired number of ECS tasks"
+}

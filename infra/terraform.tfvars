@@ -19,3 +19,7 @@ db_name               = "gatus"
 engine_version        = 16.15
 multi_az              = false
 allocated_storage     = 20
+cpu                   = 256
+memory                = 512
+log_retention_in_days = 7
+desired_count         = 1
