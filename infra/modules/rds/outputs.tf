@@ -9,6 +9,6 @@ output "db_name" {
 }
 
 output "db_secret_arn" {
-    value = aws_db_instance.this.master_user_secret[0].secret_arn
+  value       = aws_db_instance.this.master_user_secret[0].secret_arn
   description = "The ARN of the secret containing the master user password for the RDS instance"
 }
