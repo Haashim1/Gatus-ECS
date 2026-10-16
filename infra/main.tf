@@ -33,3 +33,17 @@ module "alb" {
   certificate_arn   = module.acm.certificate_arn
   health_check_path = var.health_check_path
 }
+
+module "rds" {
+  source              = "./modules/rds"
+  name_prefix         = local.name_prefix
+  database_subnet_ids = module.vpc.database_subnet_ids
+  db_username         = var.db_username
+  db_name             = var.db_name
+  rds_sg_id           = module.security_groups.rds_sg_id
+  allocated_storage   = var.allocated_storage
+  instance_class      = var.instance_class
+  engine_version      = var.engine_version
+  multi_az            = var.multi_az
+}
+
