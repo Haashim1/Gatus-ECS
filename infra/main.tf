@@ -67,3 +67,11 @@ module "ecs" {
   depends_on            = [module.alb]
 
 }
+
+module "route53" {
+  source       = "./modules/route53"
+  zone_id      = data.aws_route53_zone.selected.zone_id
+  fqdn         = local.fqdn
+  alb_dns_name = module.alb.alb_dns_name
+  alb_zone_id  = module.alb.alb_zone_id
+}
