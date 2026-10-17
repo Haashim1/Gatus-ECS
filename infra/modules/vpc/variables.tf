@@ -23,11 +23,6 @@ variable "private_subnet_cidrs" {
   description = "List of CIDR blocks for private subnets"
 }
 
-variable "database_subnet_cidrs" {
-  type        = list(string)
-  description = "List of CIDR blocks for database subnets"
-}
-
 variable "region" {
   type        = string
   description = "AWS region to deploy resources"

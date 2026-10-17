@@ -13,7 +13,3 @@ variable "container_port" {
   description = "Port for the container"
 }
 
-variable "db_port" {
-  type        = number
-  description = "Port for the database"
-}
