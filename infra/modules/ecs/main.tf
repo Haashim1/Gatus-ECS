@@ -32,22 +32,6 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
-resource "aws_iam_role_policy" "ecs_secrets" {
-  name = "${var.name_prefix}-ecs-secrets-policy"
-  role = aws_iam_role.ecs_task_execution_role.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue",
-        ]
-        Resource = var.db_secret_arn
-      }
-    ]
-  })
-}
 
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.name_prefix}-ecs-cluster"
@@ -89,35 +73,9 @@ resource "aws_ecs_task_definition" "this" {
           "awslogs-stream-prefix" = "${var.name_prefix}-ecs"
         }
       }
-      environment = [
-        {
-          name  = "DB_HOST"
-          value = var.db_host
-        },
-        {
-          name  = "DB_NAME"
-          value = var.db_name
-        },
-        {
-          name  = "DB_USER"
-          value = var.db_username
-        },
-        {
-          name  = "DB_SSLMODE"
-          value = "require"
-        }
-      ]
-
-      secrets = [
-        {
-          name      = "DB_PASSWORD"
-          valueFrom = "${var.db_secret_arn}:password::"
-        }
-      ]
     }
   ])
 }
-
 
 resource "aws_ecs_service" "this" {
   name                              = "${var.name_prefix}-ecs-service"
@@ -126,6 +84,7 @@ resource "aws_ecs_service" "this" {
   desired_count                     = var.desired_count
   launch_type                       = "FARGATE"
   health_check_grace_period_seconds = 60
+
   network_configuration {
     subnets          = var.private_subnet_ids
     security_groups  = [var.ecs_sg_id]
@@ -137,8 +96,10 @@ resource "aws_ecs_service" "this" {
     container_name   = "${var.name_prefix}-container"
     container_port   = var.container_port
   }
+
   deployment_circuit_breaker {
     enable   = true
     rollback = true
   }
 }
+

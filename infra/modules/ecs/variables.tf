@@ -53,22 +53,4 @@ variable "log_retention_in_days" {
   description = "Number of days to retain logs in CloudWatch"
 }
 
-variable "db_host" {
-  type        = string
-  description = "Database host for ECS service"
-}
 
-variable "db_name" {
-  type        = string
-  description = "Database name for ECS service"
-}
-
-variable "db_username" {
-  type        = string
-  description = "Database username for ECS service"
-}
-
-variable "db_secret_arn" {
-  type        = string
-  description = "ARN of the secret containing the database password"
-}
