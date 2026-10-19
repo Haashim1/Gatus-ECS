@@ -1,4 +1,6 @@
 resource "aws_cloudwatch_log_group" "ecs_log_group" {
+  #checkov:skip=CKV_AWS_338:7-day retention is enough for a demo and keeps cost down
+  #checkov:skip=CKV_AWS_158:Logs are already encrypted by CloudWatch by default; a customer-managed KMS key adds cost with no benefit here
   name              = "/ecs/${var.name_prefix}"
   retention_in_days = var.log_retention_in_days
 
@@ -34,6 +36,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 }
 
 resource "aws_ecs_cluster" "ecs_cluster" {
+  #checkov:skip=CKV_AWS_65:Container Insights disabled to save cost; would enable in production
   name = "${var.name_prefix}-ecs-cluster"
 
   tags = {

@@ -1,4 +1,6 @@
 resource "aws_lb" "this" {
+  #checkov:skip=CKV_AWS_150:Deletion protection would block the destroy pipeline, which is required for this project
+  #checkov:skip=CKV_AWS_91:Access logs need an extra S3 bucket and add cost; not needed for a demo, would enable in production
   name               = "${var.name_prefix}-alb"
   internal           = false
   load_balancer_type = "application"
@@ -6,6 +8,7 @@ resource "aws_lb" "this" {
   subnets            = var.public_subnet_ids
 
   enable_deletion_protection = false
+  drop_invalid_header_fields = true
 
   tags = {
     Name = "${var.name_prefix}-alb"
