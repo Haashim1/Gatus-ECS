@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:Haashim1/Gatus-ECS:ref:refs/heads/main"]
+      values   = ["repo:Haashim1@166544616/Gatus-ECS@1393324285:ref:refs/heads/main"]
     }
   }
 }
@@ -63,7 +63,7 @@ resource "aws_iam_role_policy" "ecr_push" {
   name   = "${var.project_name}-github-ecr-push"
   role   = aws_iam_role.ecr_push.id
   policy = data.aws_iam_policy_document.ecr_push.json
-} 
+}
 
 data "aws_iam_policy_document" "github_oidc_terraform_trust" {
   statement {
@@ -84,10 +84,11 @@ data "aws_iam_policy_document" "github_oidc_terraform_trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-         values = [
-     "repo:Haashim1/Gatus-ECS:ref:refs/heads/main",
-     "repo:Haashim1/Gatus-ECS:pull_request"
-   ]
+      values = [
+        "repo:Haashim1@166544616/Gatus-ECS@1393324285:ref:refs/heads/main",
+        "repo:Haashim1@166544616/Gatus-ECS@1393324285:pull_request"
+      ]
+
     }
   }
 }
