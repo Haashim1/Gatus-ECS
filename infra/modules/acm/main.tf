@@ -33,13 +33,3 @@ resource "aws_acm_certificate_validation" "cert_validation" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
-terraform {
-  required_version = ">= 1.16"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 6.0"
-    }
-  }
-}
