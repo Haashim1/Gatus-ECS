@@ -1,4 +1,5 @@
 resource "aws_security_group" "alb" {
+  #checkov:skip=CKV2_AWS_5:False positive; attached to the ALB/ECS service via module outputs, which this check cannot follow
   name        = "${var.name_prefix}-alb-sg"
   description = "Security group for the ALB that allows HTTP and HTTPS traffic"
   vpc_id      = var.vpc_id
@@ -35,6 +36,7 @@ resource "aws_vpc_security_group_egress_rule" "alb_egress" {
 }
 
 resource "aws_security_group" "ecs" {
+  #checkov:skip=CKV2_AWS_5:False positive; attached to the ALB/ECS service via module outputs, which this check cannot follow
   name        = "${var.name_prefix}-ecs-sg"
   description = "Security group for the ECS tasks that allows traffic from the ALB"
   vpc_id      = var.vpc_id

@@ -56,6 +56,7 @@ jobs:
           directory: infra
           framework: terraform
           quiet: true
+          docker_image: ghcr.io/bridgecrewio/checkov:3.3.29
 
   plan:
     runs-on: ubuntu-24.04

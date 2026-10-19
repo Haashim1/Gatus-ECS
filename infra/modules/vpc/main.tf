@@ -1,4 +1,5 @@
 resource "aws_vpc" "main" {
+  #checkov:skip=CKV2_AWS_11:VPC flow logs add CloudWatch cost; would enable in production
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -108,3 +109,12 @@ resource "aws_vpc_endpoint" "s3" {
     Name = "${var.name_prefix}-s3-endpoint"
   }
 }
+
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.name_prefix}-default-sg-locked"
+  }
+}
+

@@ -1,6 +1,7 @@
 resource "aws_lb" "this" {
   #checkov:skip=CKV_AWS_150:Deletion protection would block the destroy pipeline, which is required for this project
   #checkov:skip=CKV_AWS_91:Access logs need an extra S3 bucket and add cost; not needed for a demo, would enable in production
+  #checkov:skip=CKV2_AWS_28:WAF adds monthly cost; would add in production
   name               = "${var.name_prefix}-alb"
   internal           = false
   load_balancer_type = "application"
