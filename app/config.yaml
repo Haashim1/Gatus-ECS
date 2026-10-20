@@ -26,3 +26,11 @@ endpoints:
     interval: 1m
     conditions:
       - "[STATUS] == 200"
+
+  - name: Gatus self
+    group: Monitoring
+    url: "https://tm.haashimdevops.co.uk/health"
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].status == UP"
