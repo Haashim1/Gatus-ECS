@@ -33,4 +33,4 @@ endpoints:
     interval: 1m
     conditions:
       - "[STATUS] == 200"
-      - "[BODY].status == OK"
+      - "[BODY].status == ok"
