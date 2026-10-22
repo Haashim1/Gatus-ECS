@@ -205,7 +205,7 @@ To test it end to end, I added a self-monitoring endpoint to `config.yaml` and m
 
 **Scanning.** Checkov (which checks the Terraform for security misconfigurations) and tflint (which catches Terraform mistakes and bad practices) run on every pull request. I fixed the Checkov findings that made sense, and skipped the rest with a written reason next to each one. Most of those are things like WAF and flow logs, which cost extra and I'd turn on in production.
 
-**Supply chain.** Every action is pinned. Trivy is pinned to a commit SHA. `main` is protected, so all changes go through pull requests.
+**Supply chain.** Every action is pinned. Trivy is pinned to a commit SHA. Main is protected, so all changes go through pull requests.
 
 ## Design decisions
 
@@ -218,38 +218,6 @@ To test it end to end, I added a self-monitoring endpoint to `config.yaml` and m
 **ARM64.** It's cheaper on Fargate and builds natively on my Mac.
 
 **ClickOps first.** Building it manually first in the console before writing any Terraform helped me understand how the pieces fit together.
-
-
-## Deploy it yourself
-
-**Before you start, you need:**
-- An AWS account, and a domain with its hosted zone in Route 53
-- An ECR repository called `gatus`
-- The AWS CLI, logged in, and Terraform installed
-
-**1. Run the bootstrap once.** This creates the state bucket and the roles GitHub uses to log in. Update the repo name and IDs in `iam-ci.tf` to match your repo first.
-
-```bash
-cd infra/bootstrap
-terraform init
-terraform apply
-terraform output
-```
-
-**2. Add the repository variables in GitHub.** Go to Settings → Secrets and variables → Actions → **Variables**:
-
-| Name | Value |
-|---|---|
-| `AWS_REGION` | `eu-west-2` |
-| `ECR_REPOSITORY` | `gatus` |
-| `ECR_PUSH_ROLE_ARN` | from `terraform output` |
-| `TERRAFORM_ROLE_ARN` | from `terraform output` |
-
-**3. Build the image.** Go to Actions → **Docker Build and Push** → Run workflow.
-
-**4. Deploy.** Go to Actions → **Deploy** → Run workflow, and leave the image tag blank to use the latest image. It takes about 4 minutes, and finishes with a health check on the live site.
-
-**5. Tear it down.** Go to Actions → **Terraform Destroy** → Run workflow, and type `destroy` to confirm. The state bucket, ECR and the IAM roles stay, so you can deploy again any time.
 
 ## Lessons learned
 
