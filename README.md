@@ -160,7 +160,7 @@ There are four GitHub Actions workflows:
 
 I work on a branch and open a pull request. The plan workflow runs and shows me exactly what's going to change before anything happens. When I merge the pull request into `main`, the right pipelines run on their own: an app change builds a new image, and as soon as that succeeds, the deploy picks it up straight away. The last step checks `/health` on the live site, and if it doesn't come back healthy, the pipeline fails.
 
-To test it end to end, I added a self-monitoring endpoint to `config.yaml` and merged it. It took me three tries to get the health condition right (I'd guessed `UP`, then `OK`, before checking the real response and finding it was `ok`), but each time the change went from merging into `main` to the live dashboard without me touching anything.
+To test it end to end, I added a self-monitoring endpoint to `config.yaml` and merged it. It took me three tries to get the health condition right, I ran the curl command and it showed the real value was ok. but each time the change went from merging into `main` to the live dashboard without me touching anything.
 
 
 
