@@ -110,7 +110,7 @@ curl http://localhost:8080/health
 
 I split the Terraform into two parts.
 
-**`infra/bootstrap/`** is something I run once from my laptop. It creates the S3 bucket for Terraform state and the IAM roles GitHub uses to log in. The pipelines need these before they can do anything, so they live outside the main stack and don't get deleted when I tear it down.
+I run **`infra/bootstrap/`** once from my laptop. It creates the S3 bucket for Terraform state and the IAM roles GitHub uses to log in. The pipelines need these before they can do anything, so they live outside the main stack and don't get deleted when I tear it down.
 
 **`infra/`** is the main stack, which the pipelines build and destroy.
 
@@ -174,7 +174,7 @@ To test it end to end, I added a self-monitoring endpoint to `config.yaml` and m
 
 ### Screenshots
 
-**Docker build and push, with the Trivy report saved as an artifact**
+**Docker build and push (with the Trivy report saved as an artifact)**
 ![Docker build](docs/screenshots/cicd/6.1-docker-build-success.png)
 ![Trivy report](docs/screenshots/cicd/6.3-trivy-report-clean.png)
 
@@ -235,4 +235,4 @@ To test it end to end, I added a self-monitoring endpoint to `config.yaml` and m
 
 The NAT gateway and the load balancer cost money every hour they’re running, even when nobody's using the site, so I destroy the stack after each session and redeploy it with one pipeline run when I need it.
 
-What stays up between sessions costs almost nothing: the Route 53 hosted zone ($0.50 a month), the ECR images, and the state bucket. I also set up an AWS budget alert, so I get an email if costs go above what I expect.
+What stays up between sessions costs isn't costly: the Route 53 hosted zone ($0.50 a month), the ECR images, and the state bucket. I also set up an AWS budget alert, so I get an email if costs go above what I expect.
