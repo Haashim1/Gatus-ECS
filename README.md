@@ -118,14 +118,12 @@ I split the Terraform into two parts.
 
 Each part of the infrastructure has its own module:
 
-| Module | What it does |
-|---|---|
-| `vpc` | The network: two public and two private subnets across two Availability Zones (AZs), plus the internet gateway, NAT gateway and S3 endpoint |
-| `security-groups` | Firewall rules: the ALB accepts 80/443 from anywhere, and the app only accepts 8080 from the ALB |
-| `acm` | The HTTPS certificate for `tm.haashimdevops.co.uk`, validated through DNS |
-| `alb` | The load balancer, which redirects HTTP to HTTPS and forwards traffic to the app |
-| `ecs` | The cluster, task definition and service that run Gatus, plus its logs |
-| `route53` | The DNS record that points the domain at the load balancer |
+- **`vpc`:** the network, with public and private subnets across two AZs
+- **`security-groups`:** firewall rules for the load balancer and the app
+- **`acm`:** the HTTPS certificate
+- **`alb`:** the load balancer, which redirects HTTP to HTTPS
+- **`ecs`:** the cluster and service that run Gatus
+- **`route53`:** the DNS record for the domain
 
 ### State and locking
 
@@ -150,14 +148,12 @@ The bucket is versioned and encrypted, blocks public access, and has `prevent_de
 
 ## CI/CD pipelines
 
-There are four GitHub Actions workflows, each doing one thing:
+There are four GitHub Actions workflows:
 
-| Workflow | Runs when | What it does |
-|---|---|---|
-| `docker.yml` | App code or Dockerfile changes on `main` | Builds the image, scans it with Trivy, pushes it to ECR tagged with the commit SHA |
-| `terraform-plan.yml` | A pull request changes `infra/` | Checks formatting, validates, runs tflint and Checkov, and shows the plan |
-| `deploy.yml` | Infra changes on `main`, after a successful Docker build, or manually | Applies Terraform, waits for ECS to settle, then checks `/health` over HTTPS |
-| `destroy.yml` | Manually only, after typing `destroy` | Tears down the whole stack |
+- **`docker.yml`:** builds the image, scans it with Trivy and pushes it to ECR. It runs when the app changes.
+- **`terraform-plan.yml`:** checks the Terraform and shows the plan. It runs on pull requests.
+- **`deploy.yml`:** applies Terraform and checks the site is healthy. It runs after a merge or a new image.
+- **`destroy.yml`:** tears everything down. It only runs manually, after you type `destroy`.
 
 
 ### How a change gets to production
