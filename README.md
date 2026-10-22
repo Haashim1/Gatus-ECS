@@ -2,8 +2,6 @@
 
 I containerised Gatus (a health monitoring dashboard) and deployed it on AWS ECS Fargate, with the infrastructure built in Terraform and shipped through GitHub Actions.
 
-**Live:** https://tm.haashimdevops.co.uk *(destroyed between sessions to save cost)*
-
 ## Project overview
 
 Gatus checks websites and services on a schedule and shows whether they're up. I configured it to check AWS, Google, Docker, Terraform and itself.
