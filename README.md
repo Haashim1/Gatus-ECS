@@ -31,25 +31,25 @@ I first built everything manually in the AWS console (ClickOps), tore it down, t
 ```
 Gatus-ECS/
 ├── .github/workflows/
-│   ├── docker.yml             # builds, scans and pushes the image to ECR
-│   ├── terraform-plan.yml     # lint, Checkov and plan on pull requests
-│   ├── deploy.yml             # applies Terraform and checks /health
-│   └── destroy.yml            # manual teardown, with a typed confirmation ("destroy") 
-├── app/                       # Gatus source code 
-│   └── config.yaml            # the sites Gatus checks
+│   ├── docker.yml
+│   ├── terraform-plan.yml
+│   ├── deploy.yml
+│   └── destroy.yml
+├── app/
+│   └── config.yaml
 ├── infra/
-│   ├── bootstrap/             # run once: state bucket, OIDC provider, CI roles
+│   ├── bootstrap/
 │   ├── modules/
-│   │   ├── vpc/               # network, subnets, gateways, S3 endpoint
-│   │   ├── security-groups/   # firewall rules for the ALB and the app
-│   │   ├── acm/               # HTTPS certificate
-│   │   ├── alb/               # load balancer and listeners
-│   │   ├── ecs/               # cluster, task definition and service
-│   │   └── route53/           # DNS record for the domain
-│   ├── main.tf                # wires the modules together
-│   ├── backend.tf             # S3 remote state with locking
-│   └── *.tf                   # variables, outputs, providers, data sources
-├── docs/                      # architecture diagram, demo GIF, screenshots
+│   │   ├── vpc/
+│   │   ├── security-groups/
+│   │   ├── acm/
+│   │   ├── alb/
+│   │   ├── ecs/
+│   │   └── route53/
+│   ├── main.tf
+│   ├── backend.tf
+│   └── *.tf
+├── docs/
 ├── Dockerfile
 ├── .dockerignore
 └── .gitignore
